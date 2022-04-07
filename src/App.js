@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Skeleton } from "antd";
+import { useEffect, useState } from "react";
+import { Pagination } from "antd";
+
+import "./App.css";
+import Header from "./Layout/Header";
+import Body from "./Layout/Body";
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    const timing = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    return () => {
+      clearTimeout(timing);
+    };
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <Modal /> */}
+      <div className="App">
+        {loading && <Skeleton paragraph={{ rows: 8 }} />}
+        {!loading && (
+          <>
+            <Header />
+            <Body />
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
